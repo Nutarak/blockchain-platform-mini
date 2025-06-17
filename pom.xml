@@ -68,6 +68,13 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-security</artifactId>
     </dependency>
+
+    <!-- ✅ BouncyCastle：用于生成密钥对（钱包模块） -->
+    <dependency>
+      <groupId>org.bouncycastle</groupId>
+      <artifactId>bcprov-jdk15on</artifactId>
+      <version>1.70</version>
+    </dependency>
   </dependencies>
 
   <!-- ✅ 构建插件配置 -->

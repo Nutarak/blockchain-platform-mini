@@ -1,7 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+                             https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.example</groupId>
@@ -10,13 +11,14 @@
   <packaging>jar</packaging>
 
   <name>Blockchain Platform</name>
+  <description>轻量级区块链交易平台（Java + Spring Boot）</description>
 
   <properties>
     <java.version>17</java.version>
     <spring.boot.version>3.2.5</spring.boot.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
-  <!-- ✅ Spring Boot 版本管理 -->
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -30,64 +32,69 @@
   </dependencyManagement>
 
   <dependencies>
-    <!-- ✅ Spring Web -->
+    <!-- ✅ Spring Boot Web：REST API 支持 -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
 
-    <!-- ✅ JPA 持久化 -->
+    <!-- ✅ Spring Boot Actuator：系统监控 -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+
+    <!-- ✅ Spring Data JPA：数据持久化 -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-jpa</artifactId>
     </dependency>
 
-    <!-- ✅ H2 内存数据库 -->
+    <!-- ✅ H2 数据库（内存） -->
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
       <scope>runtime</scope>
     </dependency>
 
-    <!-- ✅ 测试 -->
+    <!-- ✅ Spring Security：安全认证 -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-test</artifactId>
-      <scope>test</scope>
+      <artifactId>spring-boot-starter-security</artifactId>
     </dependency>
 
-    <!-- ✅ Web3j：生成以太坊钱包地址 -->
+    <!-- ✅ Web3j：支持以太坊地址与签名 -->
     <dependency>
       <groupId>org.web3j</groupId>
       <artifactId>core</artifactId>
       <version>4.9.8</version>
     </dependency>
 
-    <!-- ✅ Spring Security：用于 BCrypt 加密密码 -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-security</artifactId>
-    </dependency>
-
-    <!-- ✅ BouncyCastle：用于生成密钥对（钱包模块） -->
+    <!-- ✅ Bouncy Castle：ECDSA 签名支持 -->
     <dependency>
       <groupId>org.bouncycastle</groupId>
       <artifactId>bcprov-jdk15on</artifactId>
       <version>1.70</version>
     </dependency>
+
+    <!-- ✅ 测试依赖 -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
-  <!-- ✅ 构建插件配置 -->
   <build>
     <plugins>
-      <!-- Spring Boot 启动插件 -->
+      <!-- ✅ Spring Boot 插件 -->
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
         <version>${spring.boot.version}</version>
       </plugin>
 
-      <!-- Java 编译器插件 -->
+      <!-- ✅ 编译插件 -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -95,9 +102,11 @@
         <configuration>
           <source>${java.version}</source>
           <target>${java.version}</target>
+          <encoding>UTF-8</encoding>
         </configuration>
       </plugin>
     </plugins>
   </build>
+
 </project>
 

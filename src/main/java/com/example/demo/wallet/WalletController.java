@@ -14,8 +14,12 @@ public class WalletController {
         String publicKey = WalletUtils.encodeKey(keyPair.getPublic());
         String privateKey = WalletUtils.encodeKey(keyPair.getPrivate());
         String address = WalletUtils.getAddress(keyPair.getPublic());
-
         return new Wallet(address, publicKey, privateKey);
+    }
+
+    @GetMapping("/generate") // ✅ 方便 curl 测试
+    public Wallet generateWallet() throws Exception {
+        return createWallet();
     }
 }
 

@@ -87,11 +87,21 @@
 
   <build>
     <plugins>
-      <!-- ✅ Spring Boot 插件 -->
+      <!-- ✅ Spring Boot 插件：用于生成可执行 JAR -->
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
         <version>${spring.boot.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal> <!-- ⬅️ 关键 -->
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <mainClass>com.example.demo.BlockchainPlatformApplication</mainClass> <!-- ⬅️ 启动类 -->
+        </configuration>
       </plugin>
 
       <!-- ✅ 编译插件 -->

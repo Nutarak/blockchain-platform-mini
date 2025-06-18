@@ -9,39 +9,40 @@ import java.security.PublicKey;
  * 区块链交易类，包含发送者、接收者、金额和签名信息。
  */
 public class Transaction {
-    private String sender;           // 钱包地址（从公钥派生）
-    private String receiver;         // 钱包地址
-    private double amount;           // 金额
-
-    private String signature;        // Base64签名
-    private String publicKeyBase64;  // 发送者的公钥（用于验签）
+    private String sender;
+    private String receiver;
+    private double amount;
+    private String signature;
+    private String publicKeyBase64;
 
     public Transaction() {}
 
-    public Transaction(String sender, String receiver, double amount) {
+    // ✅ 控制器使用的完整构造函数（含签名和公钥）
+    public Transaction(String sender, String receiver, double amount, String publicKeyBase64, String signature) {
         this.sender = sender;
         this.receiver = receiver;
         this.amount = amount;
+        this.publicKeyBase64 = publicKeyBase64;
+        this.signature = signature;
     }
 
-    /**
-     * 获取用于签名/验签的原始数据
-     */
+    // ✅ 用于后端签名的构造函数
+    public Transaction(String sender, String receiver, double amount, String signature) {
+        this.sender = sender;
+        this.receiver = receiver;
+        this.amount = amount;
+        this.signature = signature;
+    }
+
     public String getRawData() {
         return sender + receiver + amount;
     }
 
-    /**
-     * 对当前交易进行签名（调用者需提供私钥和公钥）
-     */
     public void sign(PrivateKey privateKey, PublicKey publicKey) {
         this.signature = WalletUtils.sign(getRawData(), privateKey);
         this.publicKeyBase64 = WalletUtils.publicKeyToBase64(publicKey);
     }
 
-    /**
-     * 验证当前交易签名是否有效
-     */
     public boolean verifySignature() {
         if (signature == null || publicKeyBase64 == null) return false;
         PublicKey pubKey = WalletUtils.getPublicKeyFromBase64(publicKeyBase64);

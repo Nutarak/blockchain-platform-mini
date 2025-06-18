@@ -3,12 +3,13 @@ package com.example.demo.wallet;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import java.security.*;
+import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 import java.security.MessageDigest;
 
 /**
- * 钱包工具类：生成密钥、签名、验签、公钥转地址
+ * 钱包工具类：生成密钥、签名、验签、公钥地址派生等
  */
 public class WalletUtils {
 
@@ -17,7 +18,7 @@ public class WalletUtils {
     }
 
     /**
-     * 生成 ECDSA 密钥对（公钥 + 私钥）
+     * 生成 ECDSA 密钥对（椭圆曲线加密）
      */
     public static KeyPair generateKeyPair() {
         try {
@@ -30,7 +31,7 @@ public class WalletUtils {
     }
 
     /**
-     * 使用私钥对数据进行签名（返回 Base64 编码字符串）
+     * 私钥对数据签名，返回 Base64 编码签名串
      */
     public static String sign(String data, PrivateKey privateKey) {
         try {
@@ -45,7 +46,7 @@ public class WalletUtils {
     }
 
     /**
-     * 验证签名是否有效
+     * 验证签名是否正确
      */
     public static boolean verify(String data, String signatureStr, PublicKey publicKey) {
         try {
@@ -61,7 +62,7 @@ public class WalletUtils {
     }
 
     /**
-     * 从 Base64 编码恢复公钥对象
+     * Base64 -> 公钥对象
      */
     public static PublicKey getPublicKeyFromBase64(String base64) {
         try {
@@ -75,34 +76,48 @@ public class WalletUtils {
     }
 
     /**
-     * 将公钥编码为 Base64 字符串
+     * Base64 -> 私钥对象（用于签名恢复）
+     */
+    public static PrivateKey getPrivateKeyFromBase64(String base64) {
+        try {
+            byte[] bytes = Base64.getDecoder().decode(base64);
+            PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(bytes);
+            KeyFactory kf = KeyFactory.getInstance("EC", "BC");
+            return kf.generatePrivate(spec);
+        } catch (Exception e) {
+            throw new RuntimeException("❌ 私钥解析失败", e);
+        }
+    }
+
+    /**
+     * 公钥 -> Base64 字符串
      */
     public static String publicKeyToBase64(PublicKey key) {
         return Base64.getEncoder().encodeToString(key.getEncoded());
     }
 
     /**
-     * 将私钥编码为 Base64 字符串
+     * 私钥 -> Base64 字符串
      */
     public static String privateKeyToBase64(PrivateKey key) {
         return Base64.getEncoder().encodeToString(key.getEncoded());
     }
 
     /**
-     * encodeKey() 是公私钥通用编码方法（为兼容旧代码）
+     * 任意 Key -> Base64（兼容旧接口）
      */
     public static String encodeKey(Key key) {
         return Base64.getEncoder().encodeToString(key.getEncoded());
     }
 
     /**
-     * 从公钥生成钱包地址（SHA-256 哈希 + 截断）
+     * 公钥 -> 钱包地址（模拟版，截断 SHA256 哈希）
      */
     public static String getAddress(PublicKey publicKey) {
         try {
             MessageDigest sha = MessageDigest.getInstance("SHA-256");
             byte[] hash = sha.digest(publicKey.getEncoded());
-            return Base64.getEncoder().encodeToString(hash).substring(0, 32); // 截断模拟地址
+            return Base64.getEncoder().encodeToString(hash).substring(0, 32);
         } catch (Exception e) {
             return Base64.getEncoder().encodeToString(publicKey.getEncoded()).substring(0, 32);
         }

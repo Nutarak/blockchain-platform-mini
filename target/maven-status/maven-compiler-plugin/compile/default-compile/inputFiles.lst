@@ -1,5 +1,6 @@
 /home/hayashi/projects/blockchain-platform/src/main/java/com/example/blockchainplatform/entity/User.java
 /home/hayashi/projects/blockchain-platform/src/main/java/com/example/demo/transaction/TransactionUtils.java
+/home/hayashi/projects/blockchain-platform/src/main/java/com/example/demo/utils/HashUtils.java
 /home/hayashi/projects/blockchain-platform/src/main/java/com/example/blockchainplatform/controller/UserController.java
 /home/hayashi/projects/blockchain-platform/src/main/java/com/example/demo/block/Block.java
 /home/hayashi/projects/blockchain-platform/src/main/java/com/example/demo/config/SecurityConfig.java
@@ -13,7 +14,7 @@
 /home/hayashi/projects/blockchain-platform/src/main/java/com/example/blockchainplatform/HelloController.java
 /home/hayashi/projects/blockchain-platform/src/main/java/com/example/demo/wallet/WalletUtils.java
 /home/hayashi/projects/blockchain-platform/src/main/java/com/example/blockchainplatform/service/UserService.java
+/home/hayashi/projects/blockchain-platform/src/main/java/com/example/demo/controller/TransactionController.java
 /home/hayashi/projects/blockchain-platform/src/main/java/com/example/demo/block/BlockChain.java
-/home/hayashi/projects/blockchain-platform/src/main/java/com/example/demo/block/BlockController.java
-/home/hayashi/projects/blockchain-platform/src/main/java/com/example/demo/transaction/TransactionController.java
+/home/hayashi/projects/blockchain-platform/src/main/java/com/example/demo/controller/BlockController.java
 /home/hayashi/projects/blockchain-platform/src/main/java/com/example/blockchainplatform/SecurityConfig.java

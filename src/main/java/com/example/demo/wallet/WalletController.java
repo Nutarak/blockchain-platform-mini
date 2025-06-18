@@ -11,8 +11,8 @@ public class WalletController {
     @PostMapping
     public Wallet createWallet() throws Exception {
         KeyPair keyPair = WalletUtils.generateKeyPair();
-        String publicKey = WalletUtils.encodeKey(keyPair.getPublic());
-        String privateKey = WalletUtils.encodeKey(keyPair.getPrivate());
+        String publicKey = WalletUtils.publicKeyToBase64(keyPair.getPublic());   // ✅ 修正这里
+        String privateKey = WalletUtils.privateKeyToBase64(keyPair.getPrivate()); // ✅ 修正这里
         String address = WalletUtils.getAddress(keyPair.getPublic());
         return new Wallet(address, publicKey, privateKey);
     }
